@@ -9,7 +9,6 @@ openstack network delete osm_demo_network
 
 openstack keypair delete osm_demo_keypair
 
-#openstack router set osm_demo_router --external-gateway public
 
 
 

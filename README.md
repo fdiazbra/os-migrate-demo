@@ -151,3 +151,8 @@ Check the serialized file for the workload. It should have a volume attached to 
 make execute-import-workload-demo
 ```
 Check that there is not any error during the execution and also that the resources are created in the destination cloud.
+
+
+## Clean up:
+
+Clean both source and destination clouds with the script `clean_demo_resources.sh`
