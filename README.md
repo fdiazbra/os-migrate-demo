@@ -9,7 +9,7 @@ More information in the official [os-migrate repository](https://github.com/os-m
 
 Content required to migrate a OSP workload with an attached cinder volume to another OSP cloud. 
 
-### Requirements:
+## Requirements and configuration:
 * Source and destination cloud deployed
 * Get the os-migrate repo and use the toolbox to deploy the migrator host:
 ```
@@ -38,6 +38,7 @@ os_migrate_dst_auth:
 os_migrate_dst_region_name: regionOne
 ```
 * Vars file like `os-migrate-demo.yml` included in this repository.
+
 * For this demo we have created the playbooks: `export_pre_workload_demo.yml` and `import_pre_workload_demo.yml` that will execute the required roles.
 * Create the Makefile entries for handling the conversion hosts:
 ```
@@ -121,4 +122,32 @@ execute-import-workload-demo: reinstall
 		-e @/root/os_migrate/os_migrate/os-migrate-demo-clouds.yml \
 		$(OS_MIGRATE)/playbooks/import_workloads.yml
 ```
+## Procedure:
+* Deploy the resources in the source cloud with the script `create_demo_resources.sh`
 
+### Pre-workload migration:
+* Execute the export pre-workload playbook:
+```
+make execute-export-pre-workload-demo
+```
+Check the serialized files for network, subnetwork, keypair and router. Modify them in case of need.
+
+* Execute the import pre-workload playbook:
+```
+make execute-import-pre-workload-demo
+```
+Check that there is not any error during the execution and also that the resources are created in the destination cloud.
+
+
+### Workload migration:
+* Execute the export workload playbook:
+```
+make execute-export-workload-demo
+```
+Check the serialized file for the workload. It should have a volume attached to it called `osm_demo_volume`
+
+* Execute the import workload playbook:
+```
+make execute-import-workload-demo
+```
+Check that there is not any error during the execution and also that the resources are created in the destination cloud.
